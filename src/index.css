@@ -5,13 +5,19 @@
 
 @layer base {
     body {
-        @apply bg-[#141414] font-Roboto
+        @apply bg-[#141414] font-Roboto scrollbar-hide
     }
 }
 
 @layer components {
     .grid-layout {
         @apply grid place-items-center
+    }
+    .flex-layout {
+        @apply flex justify-between items-center px-4
+    }
+    .flex-center {
+        @apply flex items-center
     }
     .label {
         @apply text-white block
@@ -21,5 +27,11 @@
     }
     .error {
         @apply font-bold text-red-500 py-2
+    }
+    .li-tags {
+        @apply text-gray-300 hover:text-white font-bold cursor-pointer
+    }
+    .btn {
+        @apply flex items-center gap-x-2 rounded px-5 py-2 text-sm font-bold transition hover:text-white md:mt-5 md:py-2.5 md:px-8 md:text-xl;
     }
 }
