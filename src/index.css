@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-[#141414] font-Roboto
+    }
+}
+
+@layer components {
+    .grid-layout {
+        @apply grid place-items-center
+    }
+    .label {
+        @apply text-white block
+    }
+    .input-style {
+        @apply appearance-none py-2 px-2 mt-2 w-full rounded-md focus:outline-none focus:ring-1 focus:ring-white bg-gray-400/30 text-white placeholder-gray-400
+    }
+    .error {
+        @apply font-bold text-red-500 py-2
+    }
+}
