@@ -7,7 +7,7 @@ import requests from "@/Requests/requests";
 <template>
   <main>
     <Banner/>
-    <div class="pt-2 md:pt-20">
+      <div class="pt-2 md:pt-20">
         <Row title="Trending" largeImage :fetchUrl="requests.fetchTrending"/>
         <Row title="Netflix Originals" :fetchUrl="requests.fetchNetflixOriginals"/>
         <Row title="Top Rated" :fetchUrl="requests.fetchTopRated"/>

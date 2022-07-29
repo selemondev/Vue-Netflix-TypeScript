@@ -1,10 +1,12 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watchEffect } from 'vue';
 import { YoutubeVue3 } from 'youtube-vue3';
 import axios from "../Axios/axios";
 import movieTrailer from "movie-trailer";
+import { useToast } from "vue-toastification";
 import type { MovieTypes } from '@/Types/movieDataTypes';
 import { useRoute } from 'vue-router';
+import { useMovieStore } from "@/stores/movieStore";
 const API_KEY = import.meta.env.VITE_API_KEY;
 export default defineComponent({
   components: {
@@ -16,18 +18,22 @@ export default defineComponent({
     }
   },
   setup() {
+    const movieStore = useMovieStore();
+    const movieExists = ref<boolean>(false);
+    watchEffect(() => {
+      movieExists.value = movieStore.movieExists;
+    });
     const route = useRoute();
     const params = route.params.id;
+    const toast = useToast();
     const movie = ref<MovieTypes[] | any>([]);
     const trailer = ref<string | any>("");
     const open = ref<boolean>(false);
-    // const play = ref<boolean>(false);
     const baseURL = "https://image.tmdb.org/t/p/original/";
     const searchMovieUrl = `https://api.themoviedb.org/3/movie/${params}?api_key=${API_KEY}&language=en-US`;
     const getMovie = async () => {
     const response = await axios.get(searchMovieUrl);
     movie.value = response.data;
-    console.log(movie.value)
     };
     getMovie();
     const truncate = (value:string | any, n:number) => {
@@ -42,13 +48,31 @@ export default defineComponent({
             })
         .catch((error:string)=> console.log(error));
     };
+
+    const handleAddToStore = (movie:MovieTypes) => {
+      movieStore.addMovie(movie);
+      toast.success("Movie added to MyList", {
+        timeout: 3000,
+    })
+    };
+
+    const handleRemoveFromStore = (movie:MovieTypes) => {
+      movieStore.removeMovie(movie)
+      toast.error("Movie removed from MyList", {
+        timeout: 3000,
+    });
+    }
     return {
         movie,
         baseURL,
         truncate,
         trailer,
         watchTrailer,
+        handleAddToStore,
+        handleRemoveFromStore,
+        movieStore,
         open,
+        movieExists,
     }
   },
 
@@ -99,9 +123,18 @@ export default defineComponent({
                     </div>
 
                     <div>
-                         <div class="w-8 h-8 border border-gray-200 hover:text-gray-200 rounded-full cursor-pointer flex items-center text-white justify-center">
+                         <div v-if="!movieExists">
+                          <div @click="handleAddToStore(movie)" class="w-8 h-8 border border-gray-200 hover:text-gray-200 rounded-full cursor-pointer flex items-center text-white justify-center">
                             <i class="fa-solid fa-plus md:text-xl"></i>
+                            <p class="hidden">{{movieStore.MoviesExist(movie)}}</p>
                         </div>
+                         </div>
+
+                         <div  v-if="movieExists">
+                          <div @click="handleRemoveFromStore(movie)" class="w-8 h-8 border border-green-500 hover:text-green-200 rounded-full cursor-pointer flex items-center text-green-500 justify-center">
+                            <i class="fa-solid fa-check md:text-xl"></i>
+                        </div>
+                         </div>
                     </div>
 
                    </div>
