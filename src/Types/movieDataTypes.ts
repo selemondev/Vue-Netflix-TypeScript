@@ -2,6 +2,7 @@ export interface MovieTypes {
     adult:             boolean;
     backdrop_path:     string;
     id:                number;
+    exists:            boolean;
     title?:            string;
     original_language: OriginalLanguage;
     original_title?:   string;

@@ -34,4 +34,7 @@
     .btn {
         @apply flex items-center gap-x-2 rounded px-5 py-2 text-sm font-bold transition hover:text-white md:mt-5 md:py-2.5 md:px-8 md:text-xl;
     }
+    .exact-active-class {
+        @apply font-bold text-white
+    }
 }

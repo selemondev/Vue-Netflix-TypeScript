@@ -3,6 +3,10 @@ import Netflix_Avatar from "../assets/Netflix-avatar.png";
 import NetflixHeader from "../assets/Netflix-Header.png";
 import { SearchIcon, BellIcon } from "@heroicons/vue/solid";
 import { ref, watchEffect } from "vue";
+import { useAuthStore } from "@/stores/authStore";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const authStore = useAuthStore();
 const scrolled = ref(false);
 const handleScroll = () => {
         if(window.scrollY > 0) {
@@ -15,7 +19,12 @@ const handleScroll = () => {
 };
 watchEffect(() => {
     handleScroll()
-})
+});
+
+const handleLogOut = () => {
+    authStore.logOut();
+    router.push("/login")
+}
 </script>
 <template>
     <div>
@@ -27,11 +36,11 @@ watchEffect(() => {
                     </div>
                     <div>
                         <ul class="hidden space-x-4 md:inline-flex">
-                            <li class="li-tags text-white font-bold">Home</li>
+                            <li class="li-tags"><router-link to="/">Home</router-link></li>
                             <li class="li-tags">Tv Shows</li>
                             <li class="li-tags">Movies</li>
                             <li class="li-tags">New & Popular</li>
-                            <li class="li-tags">My List</li>
+                            <li class="li-tags"><router-link to="/list">My List</router-link></li>
                         </ul>
                     </div>
                 </div>
@@ -44,7 +53,7 @@ watchEffect(() => {
                     <div>
                         <BellIcon class="h-6 w-6 text-white"/>
                     </div>
-                    <div>
+                    <div @click="handleLogOut()">
                         <img :src="Netflix_Avatar" alt="Netflix" class="w-8 h-8 rounded-md">
                     </div>
                 </div>

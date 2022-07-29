@@ -3,6 +3,7 @@ import Home from '../views/Home.vue';
 import { useAuthStore } from '@/stores/authStore';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  linkExactActiveClass: 'exact-active-class',
   routes: [
     {
       path: '/',
@@ -16,6 +17,11 @@ const router = createRouter({
       path:"/movie/:id",
       name: "movie",
       component: () => import("../views/Movie.vue")
+    },
+    {
+      path:"/list",
+      name: "list",
+      component: () => import("../views/List.vue")
     },
     {
       path: '/login',

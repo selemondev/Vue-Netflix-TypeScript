@@ -31,7 +31,7 @@ const truncate = (value:string | any, n:number) => {
             <p class="text-white text-base">{{truncate(randomMovie?.overview, 300)}}</p>
         </div>
         <div class="pt-2 flex-center space-x-4 md:pt-4">
-            <button class="py-1.5 px-4 rounded-sm bg-white hover:bg-gray-200 transition duration-200 ease-in items-center text-black space-x-2 md:space-x-3 md:px-6 md:py-2">
+             <button class="py-1.5 px-4 rounded-sm bg-white hover:bg-gray-200 transition duration-200 ease-in items-center text-black space-x-2 md:space-x-3 md:px-6 md:py-2">
                 <i class="fa-solid fa-play md:text-xl"></i>
                 <span class="font-bold text-base md:text-xl">Play</span>
             </button>
